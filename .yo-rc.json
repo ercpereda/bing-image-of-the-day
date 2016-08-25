@@ -1,0 +1,22 @@
+{
+  "generator-node-package": {
+    "appname": "bing-image-of-the-day",
+    "description": "Gets the urls from the bing's images of the day",
+    "version": "0.1.0",
+    "license": "MIT",
+    "githubuser": "ercpereda",
+    "authorname": "Ernesto R. C. Pereda",
+    "authoremail": "ercp42@gmail.com",
+    "eslintDefaults": [
+      "defaults/configurations/eslint",
+      "defaults/configurations/google"
+    ],
+    "badges": [
+      "npmv",
+      "npml",
+      "npmd",
+      "travis-build",
+      "codecov"
+    ]
+  }
+}

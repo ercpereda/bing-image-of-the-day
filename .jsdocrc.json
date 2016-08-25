@@ -1,0 +1,27 @@
+{
+  "tags": {
+    "allowUnknownTags": true,
+    "dictionaries": ["jsdoc"]
+  },
+  "source": {
+    "include": ["./src"],
+    "includePattern": ".+\\.js(doc)?$",
+    "excludePattern": ".+\\.spec\\.js$"
+  },
+  "plugins": [
+    "plugins/markdown", 
+    "node_modules/jsdoc-babel"
+  ],
+  "babel": {
+    "extensions": ["js", "es6"],
+    "presets": ["es2015", "stage-3"]
+  },
+  "templates": {},
+  "opts": {
+    "recurse": true,
+    "encoding": "utf8",
+    "destination": "./doc/",
+    "package": "./package.json",
+    "readme": "./README.md"
+  }
+}

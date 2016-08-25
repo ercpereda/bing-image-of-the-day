@@ -1,0 +1,29 @@
+sudo: false
+language: node_js
+node_js:
+  - '6'
+cache:
+  directories:
+    - node_modules
+branches:
+  only:
+    - master
+notifications:
+  email: false
+before_install:
+  - npm i -g npm@^3.9.5
+before_script:
+  - npm prune
+script:
+  - npm run linter
+  - npm run build
+after_success:
+deploy:
+  provider: npm
+  email: ercp42@gmail.com 
+  api_key:
+    secure: Y1JGaFjIWacH+CYFGcEkFI5Mom8ScqSMYql03cKPearbIfOf3eOyagmDZ8xBHJwXP2WsYu8F3A6HTJACmCEOZyXyocKVAtXvC3uJu/XN3u8fstkcCa69NCk6z5/OKxcmoFXiYKY1H1ugSajq0fl83xUeXomWiLCulAEFn+tYcsjTPuxgTu155BwiVCOkLrvkwauFUt+XO1LfAhJ5gbshHNQ32RYYsZxE3wLuMeaZ+5gnF8k1CAxAe/FhUNovz+LxOnKkrddj0jxruaTBtuwZF6gZqslzYYDuulYXLkofAOjimVnQriFe2aeApM5uVttoNALDjMJBdIhtzeOBnB7Icb+hkp0D7ecf5zSaO56XT+7sb0SUpYWWi77GXtipyjtyvJASUoWf++MaT77Lr1HIl2ZiTlcBPjpNxOF2sabx3E31QVQqjvMxyEbjHwjlw79v5cYW28QOXEMJvfkbcb7dlNyOC/5gBIecCxrVgVoL1aVgIqbfG0uPD29zf6t6XOkKc9wO73JFBBVpGgZkUHZ7/ecwS1KF6SAbWZqUNKjYxZIXEVGOs1bGmER9eoet4Ex+65Kgg/RYTE3LvUBOY1VLi1IPzI8pHNQ0X0X1zGovnfNEuPJPFwSbpHLtS6/CkTfWoi98MXgQgHi8d0Nhnc04u4a5Ev7Mw1EzGmw4mgE5MGY=
+  on:
+    tags: true
+    repo: ercpereda/bing-image-of-the-day
+    branch: master
