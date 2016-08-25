@@ -1,7 +1,7 @@
 {
   "name": "bing-image-of-the-day",
   "version": "0.1.0",
-  "description": "Gets the urls from the bing&#39;s images of the day",
+  "description": "Gets the urls from the bing's images of the day",
   "main": "dist/index.js",
   "scripts": {
     "commit": "git-cz",
