@@ -44,3 +44,6 @@ jspm_packages
 
 # Buil Folder
 dist
+
+# Doc Folder
+doc
