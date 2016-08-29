@@ -14,9 +14,7 @@
     "cover": "nyc npm test",
     "prebuild": "rimraf dist",
     "build": "npm-run-all --parallel build:*",
-    "build:main": "babel --copy-files --out-dir dist --ignore *.spec.js src",
-    "build:umd": "webpack --output-filename index.umd.js",
-    "build:umd.min": "webpack --output-filename index.umd.min.js -p"
+    "build:main": "babel --copy-files --out-dir dist --ignore *.spec.js src"
   },
   "repository": {
     "type": "git",
