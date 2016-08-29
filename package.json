@@ -10,6 +10,7 @@
     "watch:test": "npm test -- -w",
     "test": "mocha src/index.spec.js --compilers js:babel-register",
     "linter": "eslint src/**/*.js",
+    "doc": "npm run jsdoc",
     "jsdoc": "jsdoc -c .jsdocrc.json",
     "cover": "nyc npm test",
     "prebuild": "rimraf dist",
@@ -22,7 +23,8 @@
   },
   "keywords": [],
   "files": [
-    "dist"
+    "dist",
+    "doc"
   ],
   "author": "Ernesto R. C. Pereda <ercp42@gmail.com>",
   "license": "MIT",
