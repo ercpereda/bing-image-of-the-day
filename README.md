@@ -9,7 +9,7 @@ Gets the urls from the bing&#39;s images of the day
 
 ## Install
 ```bash
-npm install bing-image-of-the-day
+$ npm install bing-image-of-the-day
 ```
 
 ## Example
