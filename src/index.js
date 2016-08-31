@@ -1,4 +1,6 @@
-import * as request from 'minimal-request-promise';
+import * as request from 'request';
+import * as requestPromise from 'minimal-request-promise';
+import * as fs from 'fs';
 
 /**
  * Bing Markets
@@ -24,7 +26,7 @@ export const MKT = {
  * @returns {Promise.<Object, Error>} A promise that return the image data if resolved, or an Error if rejected
  */
 export async function getRaw(n = 1, mkt = MKT.enUS, idx = 0, format = 'js') {
-  let res = await request.get(`http://www.bing.com/HPImageArchive.aspx?format=${format}&idx=${idx}&n=${n}&mkt=${mkt}`);
+  let res = await requestPromise.get(`http://www.bing.com/HPImageArchive.aspx?format=${format}&idx=${idx}&n=${n}&mkt=${mkt}`);
 
   return JSON.parse(res.body);
 }
@@ -41,4 +43,31 @@ export async function getUrls(n = 1, mkt = MKT.enUs, idx = 0, format = 'js') {
   let res = await getRaw(n, mkt, idx, format);
 
   return res.images.map(i => `https://www.bing.com${i.url}`);
+}
+
+export function download(
+    loc = '.', n = 1, mkt = MKT.enUS, idx = 0, format = 'js') {
+  let promise = new Promise((resolve, reject) => {
+    request('https://www.bing.com/az/hprichbg/rb/BurchellsZebra_EN-US14692706178_1920x1080.jpg').
+      pipe(fs.createWriteStream('doodle.jpg')).
+      on('close', () => { console.log('close'); resolve('success'); }).
+      on('error', () => { console.log('error'); reject('error'); });
+  });
+
+  return promise;
+
+  /* let urls = await getUrls(n, mkt, idx, format);
+
+  for (let url of urls) {
+    let promise = new Promise((resolve, reject) => {
+      console.log(url);
+      request(url).
+        pipe(fs.createWriteStream('doodle.jpg')).
+        on('close', () => { console.log('success'); resolve(); }).
+        on('error', err => { console.log('error'); reject(err); });
+    });
+
+    await promise;
+  }
+  return; */
 }
