@@ -26,4 +26,9 @@ bingImg.getRaw().
 bingImg.getUrls().
   then(res => console.log(res)).
   catch(err => console.log(err));
+
+// download the images
+bingImg.download().
+  then(res => console.log(res)).
+  catch(err => console.log(err));
 ```
