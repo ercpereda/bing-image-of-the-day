@@ -52,7 +52,7 @@ export async function getUrls(n = 1, mkt = MKT.enUs, idx = 0, format = 'js') {
  * @param {MKT} [mkt=en-US] - Tells which of the 8 markets Bing is available for you would like images from.
  * @param {number} [idx=0] - Tells where you want start from. 0 would start at the current day, 1 the previous day, etc.
  * @param {string} [format=js] - Set the format in which the data will be return.
- * @returns {Promise.<Object, Error>[]} A array of promises for each image downloaded.
+ * @returns {Array<Promise.<Object, Error>>} An array of promises for each image downloaded.
  */
 export async function download(
     loc = '.', n = 1, mkt = MKT.enUS, idx = 0, format = 'js') {
