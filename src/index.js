@@ -1,4 +1,4 @@
-import * as request from 'request';
+import request from 'request';
 import * as requestPromise from 'minimal-request-promise';
 import * as fs from 'fs';
 
@@ -26,7 +26,7 @@ export const MKT = {
  * @returns {Promise.<Object, Error>} A promise that return the image data if resolved, or an Error if rejected
  */
 export async function getRaw(n = 1, mkt = MKT.enUS, idx = 0, format = 'js') {
-  let res = await requestPromise.get(`http://www.bing.com/HPImageArchive.aspx?format=${format}&idx=${idx}&n=${n}&mkt=${mkt}`);
+  const res = await requestPromise.get(`http://www.bing.com/HPImageArchive.aspx?format=${format}&idx=${idx}&n=${n}&mkt=${mkt}`);
 
   return JSON.parse(res.body);
 }
@@ -37,37 +37,40 @@ export async function getRaw(n = 1, mkt = MKT.enUS, idx = 0, format = 'js') {
  * @param {MKT} [mkt=en-US] - Tells which of the 8 markets Bing is available for you would like images from.
  * @param {number} [idx=0] - Tells where you want start from. 0 would start at the current day, 1 the previous day, etc.
  * @param {string} [format=js] - Set the format in which the data will be return.
- * @returns {Promise.<Object, Error>} A promise that return the image data if resolved, or an Error if rejected
+ * @returns {Promise.<Object, Error>} A promise that return the image's url if resolved, or an Error if rejected
  */
 export async function getUrls(n = 1, mkt = MKT.enUs, idx = 0, format = 'js') {
-  let res = await getRaw(n, mkt, idx, format);
+  const res = await getRaw(n, mkt, idx, format);
 
   return res.images.map(i => `https://www.bing.com${i.url}`);
 }
 
-export function download(
+/**
+ * Download the images in the specified location.
+ * @param {string} [loc=.] - Location in which the images will be saved.
+ * @param {number} [n=1] - How many images to return.
+ * @param {MKT} [mkt=en-US] - Tells which of the 8 markets Bing is available for you would like images from.
+ * @param {number} [idx=0] - Tells where you want start from. 0 would start at the current day, 1 the previous day, etc.
+ * @param {string} [format=js] - Set the format in which the data will be return.
+ * @returns {Promise.<Object, Error>[]} A array of promises for each image downloaded.
+ */
+export async function download(
     loc = '.', n = 1, mkt = MKT.enUS, idx = 0, format = 'js') {
-  let promise = new Promise((resolve, reject) => {
-    request('https://www.bing.com/az/hprichbg/rb/BurchellsZebra_EN-US14692706178_1920x1080.jpg').
-      pipe(fs.createWriteStream('doodle.jpg')).
-      on('close', () => { console.log('close'); resolve('success'); }).
-      on('error', () => { console.log('error'); reject('error'); });
+
+  loc = loc + (loc[loc.lenght - 1] == '/' ? '' : '/');
+
+  const urls = await getUrls(n, mkt, idx, format);
+
+  const promises = urls.map(url => {
+    const fileName = url.split('/').slice(-1)[0];
+
+    return new Promise((resolve, reject) => {
+      request(url).
+        pipe(fs.createWriteStream(loc + fileName)).
+        on('close', () =>  resolve(true)).
+        on('error', err => reject(err));
+    });
   });
 
-  return promise;
-
-  /* let urls = await getUrls(n, mkt, idx, format);
-
-  for (let url of urls) {
-    let promise = new Promise((resolve, reject) => {
-      console.log(url);
-      request(url).
-        pipe(fs.createWriteStream('doodle.jpg')).
-        on('close', () => { console.log('success'); resolve(); }).
-        on('error', err => { console.log('error'); reject(err); });
-    });
-
-    await promise;
-  }
-  return; */
+  return await Promise.all(promises);
 }
