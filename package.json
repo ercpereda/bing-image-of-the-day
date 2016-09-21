@@ -1,6 +1,6 @@
 {
   "name": "bing-image-of-the-day",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Gets the urls from the bing's images of the day",
   "main": "dist/index.js",
   "scripts": {
