@@ -18,17 +18,33 @@ $ npm install bing-image-of-the-day
 var bingImg = require('bing-image-of-the-day');
 
 // gets the raw object returned by the bing's image of the day service
-bingImg.getRaw().
+bingImg.getRaw(
+  1,                // [n=1] - How many images to return.
+  bingImg.MKT.enUS, // [mkt='en-US'] - Tells which of the 8 markets Bing is available for you would like images from.
+  0,                // [idx=0] - Tells where you want start from. 0 would start at the current day, 1 the previous day, etc.
+  'js'              // [format='js'] - Set the format in which the data will be return.
+  ).
   then(res => console.log(res)).
   catch(err => console.log(err));
 
 // gets an array with the image's urls.
-bingImg.getUrls().
+bingImg.getUrls(
+  1,                // [n=1] - How many images to return.
+  bingImg.MKT.enUS, // [mkt='en-US'] - Tells which of the 8 markets Bing is available for you would like images from.
+  0,                // [idx=0] - Tells where you want start from. 0 would start at the current day, 1 the previous day, etc.
+  'js'              // [format='js'] - Set the format in which the data will be return.
+  ).
   then(res => console.log(res)).
   catch(err => console.log(err));
 
 // download the images
-bingImg.download().
+bingImg.download(
+  '.',              // [log='.'] - Location in which the images will be saved.
+  1,                // [n=1] - How many images to return.
+  bingImg.MKT.enUS, // [mkt='en-US'] - Tells which of the 8 markets Bing is available for you would like images from.
+  0,                // [idx=0] - Tells where you want start from. 0 would start at the current day, 1 the previous day, etc.
+  'js'              // [format='js'] - Set the format in which the data will be return.
+  ).
   then(res => console.log(res)).
   catch(err => console.log(err));
 ```
